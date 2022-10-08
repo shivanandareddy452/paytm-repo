@@ -1,31 +1,32 @@
-pipeline {
-    agent any 
-    stages {
-        stage ("1. 1. install ansible pkg") {
-            steps {
-                sh "amazon-linux-extras install -y ansible2"
-                sh "mkdir -p inbound"
-                sh "mkdir -p outbound" 
-            }
-        }
-        stage ("2. service start") {
-            steps {
-                sh "systemctl restart httpd"
-                sh "systemctl enable httpd"
-            }
-        }
-        stage ("3. ansible") {
-            steps {
-                sh "ansible --version"
-                sh "rpm -qa | grep ansible"
-            }
-        }
-        stage ("4. create file") {
-            steps {
-                sh "echo test.txt" 
-                sh "date"
-                sh "cal"
-            }
-        }
+node
+{
+    stage "1. Install docker service”
+    sh "yum install -y docker"
+    
+    stage "2. update the all services"
+    sh "yum update -y"
+    
+    stage "3. restart the docker service"
+    sh "systemctl restart docker"
+    
+    stage "4. enable the docker service"
+    sh "systemctl enable docker"
+    
+    stage "5. pull the image"
+    sh "docker pull centos:latest"
+    
+    stage "6. install apache"
+    sh "yum install httpd -y"
+    
+    stage "7. restart htppd service"
+    sh "systemctl restart httpd"
+    
+    stage "8. enable service"
+    sh "systemctl enable httpd"
+    
+    stage "9. Install git service"
+    sh "yum install -y git" 
+    
+    stage "10. Check the git version"
+    sh "git —version"
     }
-}
