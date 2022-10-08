@@ -29,4 +29,4 @@ node
     
     stage "10. Check the git version"
     sh "git —version"
-}
+    }
