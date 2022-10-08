@@ -1,0 +1,31 @@
+pipeline {
+    agent any 
+    stages {
+        stage ("1. 1. install ansible pkg") {
+            steps {
+                sh "amazon-linux-extras install -y ansible2"
+                sh "mkdir -p inbound"
+                sh "mkdir -p outbound" 
+            }
+        }
+        stage ("2. service start") {
+            steps {
+                sh "systemctl restart httpd"
+                sh "systemctl enable httpd"
+            }
+        }
+        stage ("3. ansible") {
+            steps {
+                sh "ansible --version"
+                sh "rpm -qa | grep ansible"
+            }
+        }
+        stage ("4. create file") {
+            steps {
+                sh "echo test.txt" 
+                sh "date"
+                sh "cal"
+            }
+        }
+    }
+}
