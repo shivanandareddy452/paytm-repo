@@ -1,6 +1,6 @@
 node
 {
-    stage "1. Install docker service”
+    stage "1. Install docker service"
     sh "yum install -y docker"
     
     stage "2. update the all services"
